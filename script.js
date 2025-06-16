@@ -5,7 +5,7 @@ const clubDetailsContainer = document.getElementById('main');
 
 // Initialize football club data and display all clubs
 let clubData = [...footballClubs];
-//displayClubs(footballClubs);
+displayClubs(footballClubs);
 
 
 
