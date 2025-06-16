@@ -5,7 +5,7 @@ const clubDetailsContainer = document.getElementById('main');
 
 // Initialize football club data and display all clubs
 let clubData = [...footballClubs];
-displayClubs(footballClubs);
+//displayClubs(footballClubs);
 
 
 
@@ -16,32 +16,31 @@ function displayClubs(clubs) {
     const clubList = document.getElementById("club-list");
     clubList.innerHTML = "";
     clubs.map((club) => {
-    const card = document.createElement("div");
-    card.className = "club-card";
-    card.onclick = () => handleClubClick(club);
+        const card = document.createElement("div");
+        card.className = "club-card";
+        card.onclick = () => handleClubClick(club);
 
-    card.innerHTML = `
-    <h3>${club.name}</h3>
-    <img src="${club.image}" alt="${club.name} Logo" width="100" />
-    <p><strong>League:</strong> ${club.league}</p>
-    <p><strong>City:</strong> ${club.city}</p>
-     <div class="spacer"></div>
-       <button style= width:100% class="view-players-btn">View Players</button>
-    `;
+        card.innerHTML = `
+        <h3>${club.name}</h3>
+        <img src="${club.image}" alt="${club.name} Logo" width="100" />
+        <p><strong>League:</strong> ${club.league}</p>
+        <p><strong>City:</strong> ${club.city}</p>
+        <div class="spacer"></div>
+        <button style= width:100% class="view-players-btn">View Players</button>
+        `;
 
 
-   // Add click to "View Players" button 
-    card.querySelector(".view-players-btn").onclick = (e) => {
-    e.stopPropagation(); // Prevent triggering card click
-    viewClubPlayers(club);
-    };
-        const button = document.querySelector(".my-button");
-    // Append card to the list
-     clubList.appendChild(card);
+    // Add click to "View Players" button 
+        card.querySelector(".view-players-btn").onclick = (e) => {
+        e.stopPropagation(); // Prevent triggering card click
+        viewClubPlayers(club);
+        };
+        //const button = document.querySelector(".my-button");
+        // Append card to the list
+        clubList.appendChild(card);
   });
 
 }
-//createClubCard();
 
 
 // Task 2: Handle search input and filter clubs
@@ -52,8 +51,8 @@ function handleSearchInput() {
     const filteredClubs = footballClubs.filter(club => {
     const clubData = `${club.name} ${club.city} ${club.league}`.toLowerCase();
     return clubData.includes(query);
-});
-  displayClubs(filteredClubs);
+    });
+    displayClubs(filteredClubs);
 }
 searchInput.addEventListener("input", filterClubs);
 function filterClubs() {
@@ -68,19 +67,31 @@ function filterClubs() {
 
 // Task 3: Handle clicking on a football club card to display club details
 function handleClubClick(element) {
-    const clubName = element.querySelector('h3').innerText;
+    const clubName = element.name;
     const club = footballClubs.find(club =>
-    club.name.toLowerCase() === clubName.toLowerCase()
-);
-if (club) {
-    displayClubDetails(club);
-  }
+    club.name.toLowerCase() === clubName.toLowerCase());
+    if(club) {
+        displayClubDetails(club);
+    }
 }
 
 
 
 // Display football club details
 function displayClubDetails(club) {
+    const clubList = document.getElementById('club-list');
+    clubList.innerHTML = `
+    <div class="club-details">
+     <button onclick="location.reload()">Back</button>
+      <h2>${club.name}</h2>
+      <img src="${club.image}" alt="${club.name} Logo" />
+      <p><strong>League:</strong> ${club.league}</p>
+      <p><strong>City:</strong> ${club.city}</p>
+      <p><strong>Stadium:</strong> ${club.stadium}</p>
+      <p>${club.description}</p>
+      <button onclick="viewClubPlayers(${club.id})">View Players</button>
+    </div>
+  `;
     
 }
 

@@ -48,8 +48,10 @@ button {
     font-size: 1em;
     font-weight: bold;
     cursor: pointer;
+    
 }
 
 .spacer {
-  flex-grow:1; /* pushes the button to the bottom */
+  flex-grow:1; 
 }
+
