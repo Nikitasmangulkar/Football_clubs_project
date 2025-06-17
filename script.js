@@ -8,11 +8,8 @@ let clubData = [...footballClubs];
 displayClubs(footballClubs);
 
 
-
-
 // Task 1: Display football clubs in the club list
 function displayClubs(clubs) {
-    // Generate HTML for club cards and set it in the clubList element
     const clubList = document.getElementById("club-list");
     clubList.innerHTML = "";
     clubs.map((club) => {
@@ -26,31 +23,20 @@ function displayClubs(clubs) {
         <p><strong>League:</strong> ${club.league}</p>
         <p><strong>City:</strong> ${club.city}</p>
         <div class="spacer"></div>
-        <button style= width:100% class="view-players-btn">View Players</button>
+        <button style= width:100% class="view-players-btn" onclick="viewClubPlayers('${club.name}')">View Players</button>
         `;
-
-
-    // Add click to "View Players" button 
-        card.querySelector(".view-players-btn").onclick = (e) => {
-        e.stopPropagation(); // Prevent triggering card click
-        viewClubPlayers(club);
-        };
-        //const button = document.querySelector(".my-button");
-        // Append card to the list
         clubList.appendChild(card);
   });
 
 }
-
-
 // Task 2: Handle search input and filter clubs
 // Attach an input event listener for the search input
 // Get the search term and convert it to lowercase for case-insensitive search
 function handleSearchInput() {
     const query = searchInput.value.toLowerCase();
     const filteredClubs = footballClubs.filter(club => {
-    const clubData = `${club.name} ${club.city} ${club.league}`.toLowerCase();
-    return clubData.includes(query);
+        const clubData1 = `${club.name} ${club.city} ${club.league}`.toLowerCase();
+        return clubData1.includes(query);
     });
     displayClubs(filteredClubs);
 }
@@ -74,22 +60,19 @@ function handleClubClick(element) {
         displayClubDetails(club);
     }
 }
-
-
-
 // Display football club details
 function displayClubDetails(club) {
     const clubList = document.getElementById('club-list');
     clubList.innerHTML = `
     <div class="club-details">
-     <button onclick="location.reload()">Back</button>
-      <h2>${club.name}</h2>
-      <img src="${club.image}" alt="${club.name} Logo" />
-      <p><strong>League:</strong> ${club.league}</p>
-      <p><strong>City:</strong> ${club.city}</p>
-      <p><strong>Stadium:</strong> ${club.stadium}</p>
-      <p>${club.description}</p>
-      <button onclick="viewClubPlayers(${club.id})">View Players</button>
+        <button onclick="location.reload()">Back</button>
+        <h2>${club.name}</h2>
+        <img src="${club.image}" alt="${club.name} Logo" />
+        <p><strong>League:</strong> ${club.league}</p>
+        <p><strong>City:</strong> ${club.city}</p>
+        <p><strong>Stadium:</strong> ${club.stadium}</p>
+        <p>${club.description}</p>
+        <button onclick="viewClubPlayers('${club.name}')">View Players</button>
     </div>
   `;
     
@@ -97,17 +80,23 @@ function displayClubDetails(club) {
 
 // Task 4: Function to view club players
 function viewClubPlayers(clubName) {
-    // Find the selected club by its name
     const selectedClub = clubData.find(club => club.name === clubName);
-
-    // Write your code here for task3
-    // Generate HTML for the list of players and display it
-
-    // Iterate over selectedClub object's players property
-
-    // Create a string joining the information of all the players of the selected Club 
-
-    // Display the information by setting the HTML in the clubDetailsContainer
-
+    let playersHTML = `
+    <div class="view-details">
+        <button onclick="location.reload()">Back</button>
+    </div>
+    <h2 style="text-align:center;">${selectedClub.name} Players</h2>
+    `;
+    selectedClub.players.forEach(player => {
+        playersHTML += `
+                <div class="player-card">
+                <p><strong>Name:</strong> ${player.name}</p>
+                <p><strong>Position:</strong> ${player.position}</p>
+                <p><strong>Goals:</strong> ${player.goals}</p>
+                <p><strong>Assists:</strong> ${player.assists}</p>
+                <hr>
+            </div>
+        `;
+    });
+    clubDetailsContainer.innerHTML = playersHTML;
 }
-
